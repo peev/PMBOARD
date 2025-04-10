@@ -11,7 +11,7 @@ interface KanbanBoardProps {
 export function KanbanBoard({ children, onDragEnd }: KanbanBoardProps) {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="flex gap-6 h-[calc(100vh-12rem)] p-6 overflow-x-auto">
         {children}
       </div>
     </DragDropContext>
@@ -26,19 +26,24 @@ interface KanbanColumnProps {
 
 export function KanbanColumn({ id, title, children }: KanbanColumnProps) {
   return (
-    <div className="kanban-column">
-      <h2 className="text-xl font-semibold mb-4 capitalize">{title}</h2>
-      <Droppable droppableId={id}>
-        {(provided) => (
-          <div
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-          >
-            {children}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
+    <div className="flex-shrink-0 w-80 bg-muted/30 rounded-lg shadow-sm">
+      <div className="p-4 flex flex-col h-full">
+        <h2 className="text-xl font-semibold mb-4 capitalize px-2">{title}</h2>
+        <Droppable droppableId={id}>
+          {(provided) => (
+            <div
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+              className="flex-1 overflow-y-auto"
+            >
+              <div className="space-y-3 p-2">
+                {children}
+                {provided.placeholder}
+              </div>
+            </div>
+          )}
+        </Droppable>
+      </div>
     </div>
   )
 } 
