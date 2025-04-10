@@ -1,4 +1,4 @@
-import { supabase } from './supabase'
+import { supabase } from './supabase-client'
 import type { Feature, FeatureStatus } from '@/types/database'
 
 export async function getFeatures() {
