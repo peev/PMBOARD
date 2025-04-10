@@ -2,7 +2,10 @@
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 
 interface FeatureProposalFormProps {
   onSubmit: (feature: { title: string; description: string }) => void
@@ -12,7 +15,7 @@ export function FeatureProposalForm({ onSubmit }: FeatureProposalFormProps) {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!title || !description) return
 
@@ -22,41 +25,39 @@ export function FeatureProposalForm({ onSubmit }: FeatureProposalFormProps) {
   }
 
   return (
-    <Card className="mb-8">
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>Propose a New Feature</CardTitle>
+        <CardDescription>
+          Submit your feature request for consideration
+        </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="title" className="block text-sm font-medium mb-1">
-              Title
-            </label>
-            <input
-              type="text"
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-2">
+            <Label htmlFor="title">Title</Label>
+            <Input
               id="title"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-3 py-2 border rounded-md"
-              placeholder="Enter feature title"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
+              placeholder="Enter a clear, concise title"
               required
             />
           </div>
-          <div>
-            <label htmlFor="description" className="block text-sm font-medium mb-1">
-              Description
-            </label>
-            <textarea
+          <div className="space-y-2">
+            <Label htmlFor="description">Description</Label>
+            <Textarea
               id="description"
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-3 py-2 border rounded-md"
-              placeholder="Describe the feature"
-              rows={3}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
+              placeholder="Provide details about the feature and its benefits"
+              className="min-h-[120px]"
               required
             />
           </div>
-          <Button type="submit">Submit Proposal</Button>
+          <Button type="submit" className="w-full">
+            Submit Proposal
+          </Button>
         </form>
       </CardContent>
     </Card>

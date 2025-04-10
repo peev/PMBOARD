@@ -88,49 +88,58 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto">
-        <div className="flex justify-center items-center h-screen">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-500"></div>
-        </div>
+      <div className="flex h-screen items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent"></div>
       </div>
     )
   }
 
   return (
-    <div className="container mx-auto">
-      <h1 className="text-3xl font-bold mb-8 text-center">Feature Voting Board</h1>
-      
-      <FeatureProposalForm onSubmit={handleFeatureSubmit} />
-      
-      <KanbanBoard onDragEnd={handleDragEnd}>
-        {Object.entries(columns).map(([columnId, columnFeatures]) => (
-          <KanbanColumn key={columnId} id={columnId} title={columnId.replace('-', ' ')}>
-            {columnFeatures.map((feature, index) => (
-              <Draggable
-                key={feature.id}
-                draggableId={feature.id}
-                index={index}
-              >
-                {(provided) => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                  >
-                    <FeatureCard
-                      id={feature.id}
-                      title={feature.title}
-                      description={feature.description}
-                      votes={feature.votes}
-                      onVote={handleVote}
-                    />
-                  </div>
-                )}
-              </Draggable>
-            ))}
-          </KanbanColumn>
-        ))}
-      </KanbanBoard>
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto py-8 px-4">
+        <header className="mb-8">
+          <h1 className="text-4xl font-bold text-center mb-2">Feature Voting Board</h1>
+          <p className="text-muted-foreground text-center">Track and vote on feature requests</p>
+        </header>
+        
+        <div className="grid lg:grid-cols-[400px,1fr] gap-8">
+          <aside>
+            <FeatureProposalForm onSubmit={handleFeatureSubmit} />
+          </aside>
+          
+          <main>
+            <KanbanBoard onDragEnd={handleDragEnd}>
+              {Object.entries(columns).map(([columnId, columnFeatures]) => (
+                <KanbanColumn key={columnId} id={columnId} title={columnId.replace('-', ' ')}>
+                  {columnFeatures.map((feature, index) => (
+                    <Draggable
+                      key={feature.id}
+                      draggableId={feature.id}
+                      index={index}
+                    >
+                      {(provided) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                        >
+                          <FeatureCard
+                            id={feature.id}
+                            title={feature.title}
+                            description={feature.description}
+                            votes={feature.votes}
+                            onVote={handleVote}
+                          />
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                </KanbanColumn>
+              ))}
+            </KanbanBoard>
+          </main>
+        </div>
+      </div>
     </div>
   )
 } 
