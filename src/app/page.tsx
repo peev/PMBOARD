@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { Draggable } from 'react-beautiful-dnd'
-import { FeatureCard } from '@/components/feature-card'
+import { FeatureCard } from '@/components/ui/feature-card'
 import { KanbanBoard, KanbanColumn } from '@/components/layout/kanban-board'
 import { FeatureProposalForm } from '@/components/forms/feature-proposal-form'
 import { getFeatures, createFeature, updateFeatureStatus, updateFeatureVotes } from '@/lib/features'
