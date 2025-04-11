@@ -1,3 +1,5 @@
+'use client'
+
 import { supabase } from './supabase-client'
 import type { Feature, FeatureStatus } from '@/types/database'
 
